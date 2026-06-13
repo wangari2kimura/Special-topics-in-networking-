@@ -1,0 +1,654 @@
+{
+    "ansible_facts": {
+        "ansible_net_all_ipv4_addresses": [
+            "10.20.21.21",
+            "10.10.15.2",
+            "10.18.18.1",
+            "10.20.20.1",
+            "10.21.21.1",
+            "10.22.22.1",
+            "172.16.54.2",
+            "192.168.66.1",
+            "10.88.88.1",
+            "172.16.89.2",
+            "172.16.102.2",
+            "172.16.123.2",
+            "10.34.6.1",
+            "10.2.2.2",
+            "10.10.20.66",
+            "192.168.101.1",
+            "192.168.102.1",
+            "10.100.100.100",
+            "192.168.200.1"
+        ],
+        "ansible_net_all_ipv6_addresses": [],
+        "ansible_net_api": "cliconf",
+        "ansible_net_config": "Building configuration...\n\nCurrent configuration : 19645 bytes\n!\n! Last configuration change at 04:03:09 UTC Sat Jun 13 2026 by mohamed.aljaziri\n! NVRAM config last updated at 14:46:04 UTC Fri Jun 12 2026 by abhinavaashish012\n!\nversion 17.15\nservice timestamps debug datetime msec\nservice timestamps log datetime msec\nservice password-encryption\nservice internal\n!\nhostname my-sw\n!\n!\nvrf definition Mgmt-vrf\n !\n address-family ipv4\n exit-address-family\n !\n address-family ipv6\n exit-address-family\n!\nno logging console\naaa new-model\n!\n!\naaa group server tacacs+ labtac\n server name sandboxtacacs\n ip vrf forwarding Mgmt-vrf\n ip tacacs source-interface GigabitEthernet0/0\n!\naaa authentication login default group labtac local\naaa authentication login netconf-authn group labtac local\naaa authorization exec default group labtac local if-authenticated \naaa authorization exec netconf-authz group labtac local \naaa authorization commands 1 default group labtac local if-authenticated \naaa authorization commands 15 default group labtac local if-authenticated \n!\n!\naaa session-id common\nstacks scan-lite\nswitch 1 provision c9kv-uadp-8p\n!\n!\n!\n!\nip routing\n!\nip name-server 1.1.1.1 2.2.2.2 3.3.3.3\nno ip domain lookup\nip domain name lab.devnetsandbox.local\nip dhcp excluded-address 192.168.1.1 192.168.1.20\n!\nip dhcp pool voice\n network 10.10.10.0 255.255.255.0\n default-router 10.10.10.1 \n dns-server 8.8.8.8 \n option 150 ip 10.10.10.8 \n!\nip dhcp pool lan-pool\n network 192.168.1.0 255.255.255.0\n default-router 192.168.1.1 \n dns-server 8.8.8.8 \n!\n!\n!\nip dhcp snooping vlan 10,15,18,20-22,88,346\nno ip dhcp snooping information option\nip dhcp snooping\nip arp inspection vlan 10,15,18,20-22,88,346\nlogin on-success log\nudld enable\n\nvtp mode transparent\n!\n!\n!\n!\n!\naccess-session mac-move deny\npassword encryption aes\n!\ncrypto pki trustpoint SLA-TrustPoint\n enrollment pkcs12\n revocation-check crl\n hash sha512\n!\ncrypto pki trustpoint TP-self-signed-176228621\n enrollment selfsigned\n subject-name cn=IOS-Self-Signed-Certificate-176228621\n revocation-check none\n rsakeypair TP-self-signed-176228621\n hash sha512\n!\n!\ncrypto pki certificate chain SLA-TrustPoint\n certificate ca 01\n  30820321 30820209 A0030201 02020101 300D0609 2A864886 F70D0101 0B050030 \n  32310E30 0C060355 040A1305 43697363 6F312030 1E060355 04031317 43697363 \n  6F204C69 63656E73 696E6720 526F6F74 20434130 1E170D31 33303533 30313934 \n  3834375A 170D3338 30353330 31393438 34375A30 32310E30 0C060355 040A1305 \n  43697363 6F312030 1E060355 04031317 43697363 6F204C69 63656E73 696E6720 \n  526F6F74 20434130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 \n  82010A02 82010100 A6BCBD96 131E05F7 145EA72C 2CD686E6 17222EA1 F1EFF64D \n  CBB4C798 212AA147 C655D8D7 9471380D 8711441E 1AAF071A 9CAE6388 8A38E520 \n  1C394D78 462EF239 C659F715 B98C0A59 5BBB5CBD 0CFEBEA3 700A8BF7 D8F256EE \n  4AA4E80D DB6FD1C9 60B1FD18 FFC69C96 6FA68957 A2617DE7 104FDC5F EA2956AC \n  7390A3EB 2B5436AD C847A2C5 DAB553EB 69A9A535 58E9F3E3 C0BD23CF 58BD7188 \n  68E69491 20F320E7 948E71D7 AE3BCC84 F10684C7 4BC8E00F 539BA42B 42C68BB7 \n  C7479096 B4CB2D62 EA2F505D C7B062A4 6811D95B E8250FC4 5D5D5FB8 8F27D191 \n  C55F0D76 61F9A4CD 3D992327 A8BB03BD 4E6D7069 7CBADF8B DF5F4368 95135E44 \n  DFC7C6CF 04DD7FD1 02030100 01A34230 40300E06 03551D0F 0101FF04 04030201 \n  06300F06 03551D13 0101FF04 05300301 01FF301D 0603551D 0E041604 1449DC85 \n  4B3D31E5 1B3E6A17 606AF333 3D3B4C73 E8300D06 092A8648 86F70D01 010B0500 \n  03820101 00507F24 D3932A66 86025D9F E838AE5C 6D4DF6B0 49631C78 240DA905 \n  604EDCDE FF4FED2B 77FC460E CD636FDB DD44681E 3A5673AB 9093D3B1 6C9E3D8B \n  D98987BF E40CBD9E 1AECA0C2 2189BB5C 8FA85686 CD98B646 5575B146 8DFC66A8 \n  467A3DF4 4D565700 6ADF0F0D CF835015 3C04FF7C 21E878AC 11BA9CD2 55A9232C \n  7CA7B7E6 C1AF74F6 152E99B7 B1FCF9BB E973DE7F 5BDDEB86 C71E3B49 1765308B \n  5FB0DA06 B92AFE7F 494E8A9E 07B85737 F3A58BE1 1A48A229 C37C1E69 39F08678 \n  80DDCD16 D6BACECA EEBC7CF9 8428787B 35202CDC 60E4616A B623CDBD 230E3AFB \n  418616A9 4093E049 4D10AB75 27E86F73 932E35B5 8862FDAE 0275156F 719BB2F0 \n  D697DF7F 28\n  \tquit\ncrypto pki certificate chain TP-self-signed-176228621\n certificate self-signed 01\n  3082032E 30820216 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 \n  30312E30 2C060355 04030C25 494F532D 53656C66 2D536967 6E65642D 43657274 \n  69666963 6174652D 31373632 32383632 31301E17 0D323530 31303731 38333832 \n  345A170D 33353031 30373138 33383234 5A303031 2E302C06 03550403 0C25494F \n  532D5365 6C662D53 69676E65 642D4365 72746966 69636174 652D3137 36323238 \n  36323130 82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 \n  82010100 B6C51A3B 9839182B 83BA7803 C7920A56 D7AD59AB B5BCB2E9 A7B2CBF7 \n  E3A3C78C 1C6180FF E9B01F0C C572B6FA 72FFF20E 7DBD6606 32D7ECB2 B4845448 \n  BD2963B8 A8D61886 F0A33F75 2854749F EAA1807D 8D9AF966 E4FCB0A5 041CC72C \n  6BB0F472 EC3034F9 9BF83BC8 0B6E2E17 F2A31C26 F0141B21 B2625B98 640749C2 \n  DC0CEE49 3CD201DD 528DE682 738BEBC6 0916DB30 0C83AAD6 A3240BD5 FC645888 \n  5FD5C192 D9F50CDC 8E8B524A F27C603E 166FB0F9 B801C52E EA05DB45 153CFFDE \n  8FF93902 3972EEC6 7DAC9A39 D2B4FB1A D9F66F63 FF53A9FA 0C837FA3 67687801 \n  14B1B4DF EFD65D17 5661FF76 F219BF40 4F50059E D7154B7F 05FEC907 29821D01 \n  035EB065 02030100 01A35330 51301D06 03551D0E 04160414 E7AC9632 D1E4DD23 \n  2035CBB5 8D32585C 958F3F0E 301F0603 551D2304 18301680 14E7AC96 32D1E4DD \n  232035CB B58D3258 5C958F3F 0E300F06 03551D13 0101FF04 05300301 01FF300D \n  06092A86 4886F70D 01010D05 00038201 0100873C 1D95E5CB 896582B9 2C1C3E03 \n  F463F43B 4C05D168 3D5D0AF6 EE9CE123 74EE8FC5 1CCBBD56 DC7129D9 C1071FC6 \n  B6B5A32B 022BB6FB 7C0AA9F2 EC8504D7 BF22750F E293BB2C 6EC979F8 4DE323E1 \n  8AA907BF 1316101D A8519AC4 1E5A22D0 69F735DE 167281B6 4405F93C A0A4BEF6 \n  669E1A58 5B04D451 3E80A47F E633BB76 19FBF5C7 B94BCED6 2D7B180E 28C52CEF \n  F2756851 4A13B778 D3AF00AF 136CC4CA C8604D0A 2322C45A A4865067 0C38810D \n  E54B2005 B87C34E7 FD487FA9 D0ECB697 AFD49700 2C2C9140 B35E4E80 C093EFB4 \n  FD5F74A8 6EEBAACA 6ADCBE0A 095E0D2B C79CBD63 82A8AD4E 614D0877 9C703799 \n  3EE796C5 1D4A6985 2907C75D 19347E0E 661A\n  \tquit\n!\nservice-template DEFAULT_LINKSEC_POLICY_MUST_SECURE\n linksec policy must-secure\nservice-template DEFAULT_LINKSEC_POLICY_SHOULD_SECURE\n linksec policy should-secure\nservice-template DEFAULT_CRITICAL_VOICE_TEMPLATE\n voice vlan\nservice-template DEFAULT_CRITICAL_DATA_TEMPLATE\nservice-template webauth-global-inactive\n access-group IPV4_CRITICAL_AUTH_ACL\n inactivity-timer 3600 \nservice-template DefaultCriticalAuthVlan_SRV_TEMPLATE\n sgt 3999\n vlan 2047\nservice-template DefaultCriticalVoice_SRV_TEMPLATE\n voice vlan\nmemory free low-watermark processor 74467\n!\ndevice classifier\ndiagnostic bootup level minimal\n!\nspanning-tree mode rapid-pvst\nspanning-tree portfast default\nspanning-tree extend system-id\n!\n!\nerrdisable recovery cause bpduguard\nerrdisable recovery cause psecure-violation\nerrdisable recovery cause storm-control\n!\nenable password 6 _fP`OOHTSaMCJiYEXIbQVRJMOi_Z]]bNdKbN\n!\nusername admin privilege 15 password 6 e_^CEQAXHc^ZdCWciD]ggWLLAgGGCL[`IHSh\nusername webuser privilege 15 password 6 YbdCXefIHAIeQAfGMRcF^QdiT]H\\VcUQ]\n!\nredundancy\n mode sso\ncrypto engine compliance shield disable\n!\n!\n!\n!\n!\ntransceiver type all\n monitoring\n!\n!\nvlan 10\n name data\n!\nvlan 11-14 \n!\nvlan 15\n name voice\n!\nvlan 16-17 \n!\nvlan 18\n name IOT\n!\nvlan 19 \n!\nvlan 20\n name CORP_SERVERS\n!\nvlan 21\n name DMZ\n!\nvlan 22\n name GUEST\n!\nvlan 23\n name QUARANTINE\n!\nvlan 25\n name VLAN_25\n!\nvlan 54\n name CORP_TRANSIT\n!\nvlan 88\n name NETOPS\n!\nvlan 89\n name GUEST_TRANSIT\n!\nvlan 102\n name IOT_TRANSIT\n!\nvlan 123\n name DMZ_TRANSIT\n!\nvlan 124,234 \n!\nvlan 346\n name AUTOMATION\n!\nvlan 999\n name NATIVE_BLACKHOLE\n!\nvlan 1001,1006-1010 \n!\nlldp run\n!\nclass-map match-any system-cpp-police-topology-control\n description Topology control\nclass-map match-any system-cpp-police-sw-forward\n description Sw forwarding, L2 LVX data, LOGGING\nclass-map match-any CM-VOICE-SIGNALING\n match dscp cs3 \n match access-group name ACL-QOS-VOICE-SIGNALING\nclass-map match-any system-cpp-default\n description EWLC control, EWLC data, Inter FED \nclass-map match-any CM-VOICE-RTP\n match dscp ef \n match access-group name ACL-QOS-VOICE-RTP\nclass-map match-any system-cpp-police-sys-data\n description Learning cache ovfl, High Rate App, Exception, EGR Exception, NFL SAMPLED DATA, RPF Failed\nclass-map match-any CM-CRITICAL-DATA\n match dscp af31 \n match dscp af32 \n match dscp af33 \n match access-group name ACL-QOS-CRITICAL-DATA\nclass-map match-any system-cpp-police-punt-webauth\n description Punt Webauth\nclass-map match-any CM-EF\n match dscp ef \nclass-map match-any system-cpp-police-l2lvx-control\n description L2 LVX control packets\nclass-map match-any CM-AF41\n match dscp af41 \nclass-map match-any CM-AF31\n match dscp af31 \nclass-map match-any system-cpp-police-forus\n description Forus Address resolution and Forus traffic\nclass-map match-any system-cpp-police-multicast-end-station\n description MCAST END STATION\nclass-map match-any system-cpp-police-multicast\n description Transit Traffic and MCAST Data\nclass-map match-any system-cpp-police-l2-control\n description L2 control\nclass-map match-any system-cpp-police-dot1x-auth\n description DOT1X Auth\nclass-map match-any system-cpp-police-data\n description ICMP redirect, ICMP_GEN and BROADCAST\nclass-map match-any system-cpp-police-stackwise-virt-control\n description Stackwise Virtual\nclass-map match-any non-client-nrt-class\nclass-map match-any system-cpp-police-routing-control\n description Routing control and Low Latency\nclass-map match-any system-cpp-police-protocol-snooping\n description Protocol snooping\nclass-map match-any system-cpp-police-dhcp-snooping\n description DHCP snooping\nclass-map match-any CM-VIDEO\n match dscp af41 \n match dscp af42 \n match dscp af43 \n match access-group name ACL-QOS-VIDEO\nclass-map match-any system-cpp-police-system-critical\n description System Critical and Gold Pkt\n!\n!\npolicy-map type control subscriber PMAP_DefaultWiredDot1xClosedAuth_MAB_1X\n event session-started match-all\n  10 class always do-until-failure\n!\npolicy-map PM-QOS-EGRESS\n class CM-EF\n  priority level 1\n class CM-AF41\n  bandwidth remaining percent 25 \n class CM-AF31\n  bandwidth remaining percent 20 \n class class-default\n  bandwidth remaining percent 55 \npolicy-map system-cpp-policy\npolicy-map PM-QOS-ACCESS-IN\n class CM-VOICE-RTP\n  set dscp ef\n class CM-VOICE-SIGNALING\n  set dscp cs3\n class CM-VIDEO\n  set dscp af41\n class CM-CRITICAL-DATA\n  set dscp af31\n class class-default\n  set dscp default\n!\n! \n!\n!\n!\n!\n!\n!\n!\n!\n!\ntemplate Default_wire\n!\nmacro auto execute CISCO_DMP_EVENT builtin MS_VIDEO_CONF_AUTO_SMARTPORT \nmacro auto execute CISCO_MS_VCF_EVENT builtin CISCO_IP_CAMERA_AUTO_SMARTPORT \nmacro auto execute CISCO_SWITCH_EVENT builtin CISCO_SWITCH_AUTO_SMARTPORT \n!\nmacro auto trigger CISCO_SWITCH_EVENT\n device cisco CDB-8U\n device no cisco CDB-8U\n!\nmacro auto trigger CISCO_LAST_RESORT_EVENT\nmacro auto global processing \n!\ninterface Loopback100\n description Configured via Python Automation\n no ip address\n!\ninterface Loopback101\n description Anisble Rendered Loopback - Primary\n ip address 192.168.101.1 255.255.255.255\n!\ninterface Loopback102\n description Ansible Rendered Loopback - Secondary\n ip address 192.168.102.1 255.255.255.255\n shutdown\n!\ninterface Loopback200\n description RESTCONF Test\n ip address 10.100.100.100 255.255.255.255\n!\ninterface Loopback500\n ip address 192.168.200.1 255.255.255.0\n!\ninterface GigabitEthernet0/0\n description DO NOT TOUCH\n vrf forwarding Mgmt-vrf\n ip address 10.10.20.66 255.255.255.0\n negotiation auto\n!\ninterface GigabitEthernet1/0/1\n description RESTCONF_TEST_ACCESS\n switchport mode access\n switchport voice vlan 15\n storm-control broadcast level 2.00 1.00\n storm-control multicast level 2.00 1.00\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/2\n description ACCESS_IOT\n switchport access vlan 18\n switchport mode access\n storm-control broadcast level 1.00 0.50\n storm-control multicast level 1.00 0.50\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/3\n description Oficina-101-Recepcion\n switchport access vlan 22\n switchport mode access\n storm-control broadcast level 1.00 0.50\n storm-control multicast level 1.00 0.50\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/4\n description Oficina-102-Contabilidad\n switchport access vlan 20\n switchport mode access\n storm-control broadcast level 2.00 1.00\n storm-control multicast level 2.00 1.00\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/5\n description DERIVA-INTRUSO\n switchport access vlan 88\n switchport mode access\n storm-control broadcast level 2.00 1.00\n storm-control multicast level 2.00 1.00\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/6\n description Sala-Reuniones-Norte\n switchport access vlan 346\n switchport mode access\n storm-control broadcast level 2.00 1.00\n storm-control multicast level 2.00 1.00\n storm-control action trap\n spanning-tree portfast\n spanning-tree bpduguard enable\n service-policy input PM-QOS-ACCESS-IN\n!\ninterface GigabitEthernet1/0/7\n description SW1 to SW2\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,15,18,20-23,54,88,89,102,123,346,999\n switchport mode trunk\n ip arp inspection trust\n storm-control broadcast level 5.00 3.00\n storm-control multicast level 5.00 3.00\n storm-control action trap\n spanning-tree link-type point-to-point\n service-policy output PM-QOS-EGRESS\n ip dhcp snooping trust\n!\ninterface GigabitEthernet1/0/8\n description Access-Point-Lobby\n switchport trunk native vlan 999\n switchport trunk allowed vlan 10,15,18,20-23,54,88,89,102,123,346,999\n switchport mode trunk\n ip arp inspection trust\n storm-control broadcast level 5.00 3.00\n storm-control multicast level 5.00 3.00\n storm-control action trap\n spanning-tree link-type point-to-point\n service-policy output PM-QOS-EGRESS\n ip dhcp snooping trust\n!\ninterface Vlan1\n no ip address\n!\ninterface Vlan10\n description CORP_USERS_GATEWAY\n ip address 10.20.21.21 255.255.255.0\n ip access-group ACL-CORP-USERS-IN in\n!\ninterface Vlan15\n description VOICE_GATEWAY\n ip address 10.10.15.2 255.255.255.0\n!\ninterface Vlan18\n description IOT_GATEWAY\n ip address 10.18.18.1 255.255.255.0\n ip access-group ACL-IOT-IN in\n!\ninterface Vlan20\n description CORP_SERVERS_GATEWAY\n ip address 10.20.20.1 255.255.255.0\n!\ninterface Vlan21\n description DMZ_GATEWAY\n ip address 10.21.21.1 255.255.255.0\n ip access-group ACL-DMZ-IN in\n!\ninterface Vlan22\n description GUEST_GATEWAY\n ip address 10.22.22.1 255.255.255.0\n ip access-group ACL-GUEST-IN in\n!\ninterface Vlan23\n description QUARANTINE_NO_ROUTING\n no ip address\n!\ninterface Vlan54\n description CORP_TRANSIT_TO_UPSTREAM_ROUTER\n ip address 172.16.54.2 255.255.255.252\n ip ospf network point-to-point\n!\ninterface Vlan66\n ip address 192.168.66.1 255.255.255.0\n!\ninterface Vlan88\n description NETOPS_GATEWAY\n ip address 10.88.88.1 255.255.255.0\n!\ninterface Vlan89\n description GUEST_TRANSIT_TO_UPSTREAM_ROUTER\n ip address 172.16.89.2 255.255.255.252\n ip ospf network point-to-point\n!\ninterface Vlan102\n description IOT_TRANSIT_TO_UPSTREAM_ROUTER\n ip address 172.16.102.2 255.255.255.252\n ip ospf network point-to-point\n!\ninterface Vlan123\n description DMZ_TRANSIT_TO_UPSTREAM_ROUTER\n ip address 172.16.123.2 255.255.255.252\n ip ospf network point-to-point\n!\ninterface Vlan222\n no ip address\n!\ninterface Vlan346\n description AUTOMATION_GATEWAY\n ip address 10.34.6.1 255.255.255.0\n!\ninterface Vlan888\n ip address 10.2.2.2 255.255.255.0\n!\ninterface Vlan999\n description NATIVE_BLACKHOLE_NO_ROUTING\n no ip address\n!\nip default-gateway 10.10.20.254\nip forward-protocol nd\nip tcp mss 1280\nip tcp window-size 212000\nip http server\nip http authentication local\nip http secure-server\nip route 10.10.1.1 255.255.255.255 192.168.1.1\nip route 10.10.1.1 255.255.255.255 GigabitEthernet0/0\nip route 10.10.1.2 255.255.255.255 192.168.1.1\nip route 10.10.10.0 255.255.255.0 10.10.10.10\nip route vrf Mgmt-vrf 0.0.0.0 0.0.0.0 10.10.20.254\nip ssh bulk-mode 131072\nip ssh pubkey-chain\n username brianb.kiptoo\n  key-hash ssh-rsa 275173820259571AB17FB242EE023628\nip scp server enable\n!\nip access-list extended ACL-CORP-USERS-IN\n 10 remark Keep users away from NetOps subnet by default\n 10 deny ip any 10.88.88.0 0.0.0.255 log\n 20 permit ip any any\nip access-list extended ACL-DMZ-IN\n 10 remark DMZ hosts should not initiate broad access to internal networks\n 10 deny ip any 10.0.0.0 0.255.255.255 log\n 20 deny ip any 172.16.0.0 0.15.255.255 log\n 30 deny ip any 192.168.0.0 0.0.255.255 log\n 40 permit ip any any\nip access-list extended ACL-GUEST-IN\n 10 remark Allow DHCP client traffic\n 10 permit udp any eq bootpc any eq bootps\n 20 remark Allow DNS\n 20 permit udp any any eq domain\n 30 permit tcp any any eq domain\n 40 remark Block guest access to private/internal networks\n 40 deny ip any 10.0.0.0 0.255.255.255 log\n 50 deny ip any 172.16.0.0 0.15.255.255 log\n 60 deny ip any 192.168.0.0 0.0.255.255 log\n 70 remark Allow internet-bound traffic\n 70 permit ip any any\nip access-list extended ACL-IOT-IN\n 10 remark Allow DHCP and DNS\n 10 permit udp any eq bootpc any eq bootps\n 20 permit udp any any eq domain\n 30 permit tcp any any eq domain\n 40 remark Allow NTP\n 40 permit udp any any eq ntp\n 50 remark Block IoT from private/internal networks unless explicitly allowed\n 50 deny ip any 10.0.0.0 0.255.255.255 log\n 60 deny ip any 172.16.0.0 0.15.255.255 log\n 70 deny ip any 192.168.0.0 0.0.255.255 log\n 80 permit ip any any\nip access-list extended ACL-QOS-CRITICAL-DATA\n 10 permit tcp any any eq 22\n 20 permit tcp any any eq 443\n 30 permit tcp any any eq 830\n 40 permit tcp any any eq 50051\nip access-list extended ACL-QOS-VIDEO\n 10 permit udp any any range 50000 59999\nip access-list extended ACL-QOS-VOICE-RTP\n 10 permit udp any any range 16384 32767\nip access-list extended ACL-QOS-VOICE-SIGNALING\n 10 permit udp any any eq 5060\n 20 permit tcp any any eq 5060\n 30 permit tcp any any eq 5061\nsnmp-server community public RO\nsnmp-server manager\ntacacs server sandboxtacacs\n address ipv4 10.17.248.43\n key 6 IfRTNE\\O[VC]Q^NHOgQZLWa[SYXCPeg\\h\n!\n!\n!\ncontrol-plane\n service-policy input system-cpp-policy\n!\ncts role-based sgt-map vlan-list 1032 sgt 5\ncts role-based sgt-map vlan-list 1033 sgt 7\ncts role-based sgt-map vlan-list 1034 sgt 8\ncts role-based sgt-map vlan-list 1035 sgt 9\ncts role-based sgt-map vlan-list 1036 sgt 10\ncts role-based sgt-map vlan-list 1043 sgt 11\ncts role-based sgt-map vlan-list 1023 sgt 18\ncts role-based sgt-map vlan-list 1024 sgt 19\ncts role-based sgt-map vlan-list 1029 sgt 20\ncts role-based sgt-map vlan-list 1026 sgt 21\ncts role-based sgt-map vlan-list 1028 sgt 23\ncts role-based sgt-map vlan-list 1031 sgt 24\ncts role-based ipv6-copy\n!\nline con 0\n exec-timeout 0 0\n password 6 F\\QZTBYZFgMFSaIEXhW^OIFL^QD\n stopbits 1\nline vty 0 4\n exec-timeout 0 0\n transport input ssh\nline vty 5 15\n transport input ssh\n!\nntp source GigabitEthernet0/0\nntp server 10.17.251.250\nntp server vrf Mgmt-vrf 10.17.251.250\n!\n!\n!\n!\n!\ngnxi\nno gnxi enable-gnoi\ngnxi read-only\ngnxi secure-allow-self-signed-trustpoint\ngnxi secure-trustpoint TP-self-signed-176228621\ngnxi secure-server\nnetconf-yang\nrestconf\nyang-interfaces aaa authentication method-list netconf-authn\nyang-interfaces aaa authorization method-list netconf-authz\nend",
+        "ansible_net_cpu_utilization": {
+            "core": {
+                "five_minutes": 2,
+                "five_seconds": 4,
+                "five_seconds_interrupt": 0,
+                "one_minute": 2
+            }
+        },
+        "ansible_net_filesystems": [
+            "bootflash:"
+        ],
+        "ansible_net_filesystems_info": {
+            "bootflash:": {
+                "spacefree_kb": 9316004.0,
+                "spacetotal_kb": 11276056.0
+            }
+        },
+        "ansible_net_gather_network_resources": [],
+        "ansible_net_gather_subset": [
+            "config",
+            "default",
+            "hardware",
+            "interfaces"
+        ],
+        "ansible_net_hostname": "my-sw",
+        "ansible_net_image": "bootflash:packages.conf",
+        "ansible_net_interfaces": {
+            "GigabitEthernet0/0": {
+                "bandwidth": 1000000,
+                "description": "DO NOT TOUCH",
+                "duplex": "Full",
+                "ipv4": [
+                    {
+                        "address": "10.10.20.66",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d2",
+                "mediatype": "RJ45",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "RP management port"
+            },
+            "GigabitEthernet1/0/1": {
+                "bandwidth": 1000000,
+                "description": "RESTCONF_TEST_ACCESS",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d3",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/2": {
+                "bandwidth": 1000000,
+                "description": "ACCESS_IOT",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d4",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/3": {
+                "bandwidth": 1000000,
+                "description": "Oficina-101-Recepcion",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d5",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/4": {
+                "bandwidth": 1000000,
+                "description": "Oficina-102-Contabilidad",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d6",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/5": {
+                "bandwidth": 1000000,
+                "description": "DERIVA-INTRUSO",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d7",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/6": {
+                "bandwidth": 1000000,
+                "description": "Sala-Reuniones-Norte",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d8",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/7": {
+                "bandwidth": 1000000,
+                "description": "SW1 to SW2",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29d9",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "GigabitEthernet1/0/8": {
+                "bandwidth": 1000000,
+                "description": "Access-Point-Lobby",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.29da",
+                "mediatype": "unknown",
+                "mtu": 1500,
+                "operstatus": "up",
+                "type": "Gigabit Ethernet"
+            },
+            "Loopback100": {
+                "bandwidth": 8000000,
+                "description": "Configured via Python Automation",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            },
+            "Loopback101": {
+                "bandwidth": 8000000,
+                "description": "Anisble Rendered Loopback - Primary",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "192.168.101.1",
+                        "subnet": "32"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            },
+            "Loopback102": {
+                "bandwidth": 8000000,
+                "description": "Ansible Rendered Loopback - Secondary",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "192.168.102.1",
+                        "subnet": "32"
+                    }
+                ],
+                "lineprotocol": "down",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "administratively down",
+                "type": null
+            },
+            "Loopback200": {
+                "bandwidth": 8000000,
+                "description": "RESTCONF Test",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.100.100.100",
+                        "subnet": "32"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            },
+            "Loopback500": {
+                "bandwidth": 8000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "192.168.200.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": null,
+                "mediatype": null,
+                "mtu": 1514,
+                "operstatus": "up",
+                "type": null
+            },
+            "Vlan1": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2919",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan10": {
+                "bandwidth": 1000000,
+                "description": "CORP_USERS_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.20.21.21",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2918",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan102": {
+                "bandwidth": 1000000,
+                "description": "IOT_TRANSIT_TO_UPSTREAM_ROUTER",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "172.16.102.2",
+                        "subnet": "30"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.291f",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan123": {
+                "bandwidth": 1000000,
+                "description": "DMZ_TRANSIT_TO_UPSTREAM_ROUTER",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "172.16.123.2",
+                        "subnet": "30"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.292c",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan15": {
+                "bandwidth": 1000000,
+                "description": "VOICE_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.10.15.2",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2926",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan18": {
+                "bandwidth": 1000000,
+                "description": "IOT_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.18.18.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2948",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan20": {
+                "bandwidth": 1000000,
+                "description": "CORP_SERVERS_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.20.20.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2928",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan21": {
+                "bandwidth": 1000000,
+                "description": "DMZ_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.21.21.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.293a",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan22": {
+                "bandwidth": 1000000,
+                "description": "GUEST_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.22.22.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2948",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan222": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "down",
+                "macaddress": "0050.56bf.294b",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "down ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan23": {
+                "bandwidth": 1000000,
+                "description": "QUARANTINE_NO_ROUTING",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2916",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan346": {
+                "bandwidth": 1000000,
+                "description": "AUTOMATION_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.34.6.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2948",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan54": {
+                "bandwidth": 1000000,
+                "description": "CORP_TRANSIT_TO_UPSTREAM_ROUTER",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "172.16.54.2",
+                        "subnet": "30"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2942",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan66": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "192.168.66.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "down",
+                "macaddress": "0050.56bf.291d",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "down ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan88": {
+                "bandwidth": 1000000,
+                "description": "NETOPS_GATEWAY",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.88.88.1",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2917",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan888": {
+                "bandwidth": 1000000,
+                "description": null,
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "10.2.2.2",
+                        "subnet": "24"
+                    }
+                ],
+                "lineprotocol": "down",
+                "macaddress": "0050.56bf.2912",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "down ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan89": {
+                "bandwidth": 1000000,
+                "description": "GUEST_TRANSIT_TO_UPSTREAM_ROUTER",
+                "duplex": null,
+                "ipv4": [
+                    {
+                        "address": "172.16.89.2",
+                        "subnet": "30"
+                    }
+                ],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2946",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            },
+            "Vlan999": {
+                "bandwidth": 1000000,
+                "description": "NATIVE_BLACKHOLE_NO_ROUTING",
+                "duplex": null,
+                "ipv4": [],
+                "lineprotocol": "up",
+                "macaddress": "0050.56bf.2915",
+                "mediatype": null,
+                "mtu": 1500,
+                "operstatus": "up ",
+                "type": "Ethernet SVI"
+            }
+        },
+        "ansible_net_iostype": "IOS-XE",
+        "ansible_net_memfree_mb": 461.4362564086914,
+        "ansible_net_memtotal_mb": 727.225658416748,
+        "ansible_net_model": "C9KV-UADP-8P",
+        "ansible_net_neighbors": {
+            "GigabitEthernet1/0/1": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/2": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/3": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/4": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/5": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/6": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/7": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ],
+            "GigabitEthernet1/0/8": [
+                {
+                    "host": "my-sw.lab.devnetsandbox.local",
+                    "ip": "10.10.20.66",
+                    "platform": "cisco C9KV-UADP-8P",
+                    "port": "GigabitEthernet0/0"
+                }
+            ]
+        },
+        "ansible_net_operatingmode": "controller",
+        "ansible_net_python_version": "3.12.3",
+        "ansible_net_serialnum": "98DVJUONW1X",
+        "ansible_net_stacked_serialnums": [
+            "98DVJUONW1X"
+        ],
+        "ansible_net_system": "ios",
+        "ansible_net_version": "17.15.01",
+        "ansible_network_resources": {}
+    },
+    "changed": false,
+    "deprecations": [
+        {
+            "collection_name": "ansible.builtin",
+            "deprecator": {
+                "resolved_name": "ansible.builtin",
+                "type": null
+            },
+            "msg": "Importing 'to_bytes' from 'ansible.module_utils._text' is deprecated.",
+            "version": "2.24"
+        },
+        {
+            "collection_name": "ansible.builtin",
+            "deprecator": {
+                "resolved_name": "ansible.builtin",
+                "type": null
+            },
+            "msg": "Importing 'to_text' from 'ansible.module_utils._text' is deprecated.",
+            "version": "2.24"
+        },
+        {
+            "collection_name": "ansible.builtin",
+            "deprecator": {
+                "resolved_name": "ansible.builtin",
+                "type": null
+            },
+            "msg": "The `ansible.module_utils.common._collections_compat` module is deprecated.",
+            "version": "2.24"
+        },
+        {
+            "collection_name": "ansible.builtin",
+            "deprecator": {
+                "resolved_name": "ansible.builtin",
+                "type": null
+            },
+            "msg": "Passing `warnings` to `exit_json` or `fail_json` is deprecated.",
+            "version": "2.23"
+        }
+    ],
+    "failed": false
+}

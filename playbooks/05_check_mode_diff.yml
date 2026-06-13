@@ -1,0 +1,30 @@
+---
+- name: Dry-run rendered loopback configuration against IOS XE
+  hosts: iosxe
+  gather_facts: false
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+    lab_loopbacks:
+      - name: Loopback150
+        description: CNS4107 Ansible lab loopback - safe test
+        ip_address: 10.255.150.1
+        mask: 255.255.255.255
+    site: cisco_devnet
+  tasks:
+    - name: Ensure rendered config exists
+      ansible.builtin.template:
+        src: ../templates/loopbacks.j2
+        dest: "{{ playbook_dir }}/../rendered/{{ inventory_hostname }}_loopbacks.cfg"
+      delegate_to: localhost
+
+    - name: Load rendered config in check mode when playbook is run with --check
+      cisco.ios.ios_config:
+        src: "{{ playbook_dir }}/../rendered/{{ inventory_hostname }}_loopbacks.cfg"
+        match: line
+        save_when: never
+      register: config_result
+
+    - name: Show Ansible result summary
+      ansible.builtin.debug:
+        var: config_result

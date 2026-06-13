@@ -1,0 +1,13 @@
+---
+all:
+  children:
+    iosxe:
+      hosts:
+        sandbox_iosxe:
+          ansible_host: devnetsandboxiosxec9k.cisco.com
+          ansible_port: 22
+          ansible_user: vivian.kimura
+          ansible_password: NE-fMYV89doQ-n0
+          ansible_become_password: NE-fMYV89doQ-n0
+          device_role: devnet_sandbox
+          site: cisco_devnet

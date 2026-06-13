@@ -1,0 +1,27 @@
+---
+- name: Gather facts from IOS XE
+  hosts: iosxe
+  gather_facts: false
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+  tasks:
+    - name: Gather IOS XE facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+      register: device_facts
+
+    - name: Save facts to JSON file
+      ansible.builtin.copy:
+        content: "{{ device_facts | to_nice_json }}\n"
+        dest: "outputs/{{ inventory_hostname }}_facts.json"
+      delegate_to: localhost
+
+    - name: Display key facts
+      ansible.builtin.debug:
+        msg:
+          - "Hostname: {{ ansible_net_hostname }}"
+          - "Model: {{ ansible_net_model }}"
+          - "IOS Version: {{ ansible_net_version }}"
+          - "Serial: {{ ansible_net_serialnum }}"

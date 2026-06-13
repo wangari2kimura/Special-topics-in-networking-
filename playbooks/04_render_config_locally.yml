@@ -1,0 +1,47 @@
+---
+- name: Render IOS XE configuration locally from Jinja2 templates
+  hosts: iosxe
+  gather_facts: false
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+    site: cisco_devnet
+    lab_loopbacks:
+      - name: Loopback150
+        description: CNS4107 Ansible lab loopback - safe test
+        ip_address: 10.255.150.1
+        mask: 255.255.255.255
+    ntp_servers:
+      - 10.10.0.10
+      - 10.10.0.11
+    syslog_servers:
+      - 10.10.0.50
+    lab_banner: |
+      ************************************************************
+      This device is used for CNS4107 Ansible automation practice.
+      Do not make disruptive changes on shared sandboxes.
+      ************************************************************
+  tasks:
+    - name: Ensure rendered directory exists
+      ansible.builtin.file:
+        path: rendered
+        state: directory
+      delegate_to: localhost
+
+    - name: Render loopback configuration locally
+      ansible.builtin.template:
+        src: ../templates/loopbacks.j2
+        dest: "rendered/{{ inventory_hostname }}_loopbacks.cfg"
+      delegate_to: localhost
+
+    - name: Render management services configuration locally
+      ansible.builtin.template:
+        src: ../templates/management_services.j2
+        dest: "rendered/{{ inventory_hostname }}_management_services.cfg"
+      delegate_to: localhost
+
+    - name: Show where rendered files were created
+      ansible.builtin.debug:
+        msg:
+          - "rendered/{{ inventory_hostname }}_loopbacks.cfg"
+          - "rendered/{{ inventory_hostname }}_management_services.cfg"

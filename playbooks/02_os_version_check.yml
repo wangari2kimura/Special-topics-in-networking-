@@ -1,0 +1,27 @@
+---
+- name: Check IOS XE OS version
+  hosts: iosxe
+  gather_facts: false
+  vars:
+    ansible_connection: network_cli
+    ansible_network_os: cisco.ios.ios
+    baseline_version: "17.00.00"
+  tasks:
+    - name: Gather IOS XE facts
+      cisco.ios.ios_facts:
+        gather_subset:
+          - all
+
+    - name: Display current version
+      ansible.builtin.debug:
+        msg: "Device {{ ansible_net_hostname }} is running IOS XE {{ ansible_net_version }}"
+
+    - name: Flag device if version is older than baseline
+      ansible.builtin.debug:
+        msg: "WARNING: {{ ansible_net_hostname }} version {{ ansible_net_version }} is older than baseline {{ baseline_version }} - flag for upgrade"
+      when: ansible_net_version is version(baseline_version, '<')
+
+    - name: Confirm device is current
+      ansible.builtin.debug:
+        msg: "OK: {{ ansible_net_hostname }} version {{ ansible_net_version }} meets or exceeds baseline"
+      when: ansible_net_version is version(baseline_version, '>=')
